@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AQI Prediction Model</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    
+  </head>
+  <body>
+    <h1>AQI Prediction Model</h1>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class="flash-messages">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+    <form action="{{ url_for('predict') }}" method="post" id="aqipredictor" onsubmit="return validateForm();">
+      <label for="input1">PM2.5:</label>
+      <input type="text" class="input" id="input1" name="input1" value="0" /><br />
+
+      <label for="input2">PM10:</label>
+      <input type="text" class="input" id="input2" name="input2" value="0" /><br />
+
+      <label for="input3">NO2:</label>
+      <input type="text" class="input" id="input3" name="input3" value="0" /><br />
+
+      <label for="input4">NH3:</label>
+      <input type="text" class="input" id="input4" name="input4" value="0" /><br />
+
+      <label for="input5">SO2:</label>
+      <input type="text" class="input" id="input5" name="input5" value="0" /><br />
+
+      <label for="input6">CO:</label>
+      <input type="text" class="input" id="input6" name="input6" value="0" /><br />
+
+      <label for="input7">O3:</label>
+      <input type="text" class="input" id="input7" name="input7" value="0" /><br />
+
+      <button type="submit" class="btn" >Predict</button><br />
+
+      <br />
+       <!-- Display the predicted AQI value in the "aqi" label with color class -->
+       <label for="aqi">AQI:</label>
+       <div id="prediction_text" class="{{ prediction_css_class }}">
+        <label id="aqi" class="{{ prediction_css_class }}">{{ prediction_text }}</label><br>
+      </div>
+       <!-- Display the prominent pollutant name in the "prominent_pollutant" label -->
+       <label for="prominent_pollutant">Prominent Pollutant:</label>
+       <div id="prediction_text" class="{{ prediction_css_class }}">
+       <label id="prominent_pollutant">{{ prominent_pollutant }}</label>
+      </div>
+    </form>
+    <!-- Message box on the right side -->
+    <div class="message-box">
+      <p>*Either PM2.5 or PM10 is compulsory to predict AQI.</p>
+      <p>*Minimum 3 pollutants are required to predict AQI.</p>
+    </div>
+  </body>
+</html>
